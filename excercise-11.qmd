@@ -353,6 +353,11 @@ Use this approach to see whether variances in across groups in your various mode
   group_by(Trophic.Level) %>%
   summarise(sd_beak = sd(Relative_Beak_Length, na.rm = TRUE)))
 
+(pass3 <- pass |>
+  group_by(Trophic.Level) |>
+  summarise(sd_beak = sd(Relative_Beak_Length, na.rm = TRUE)) |>
+  summarise(ratio = max(sd_beak) / min(sd_beak)))
+
 ggplot(pass, aes(x = Relative_Beak_Length)) + 
   geom_histogram(binwidth = 0.1) +
   facet_wrap(~Trophic.Level)
