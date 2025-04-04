@@ -349,6 +349,16 @@ In the exercise above, we really did not do any checking with this dataset to se
 Use this approach to see whether variances in across groups in your various models (e.g., for **relative beak length \~ trophic level**) are roughly equal. Additionally, do a visual check of whether observations and model residuals within groups look to be normally distributed.
 
 ```{r, message=FALSE, warning=FALSE}
+(pass2 <- pass |>
+  group_by(Trophic.Level) %>%
+  summarise(sd_beak = sd(Relative_Beak_Length, na.rm = TRUE)))
 
+ggplot(pass, aes(x = Relative_Beak_Length)) + 
+  geom_histogram(binwidth = 0.1) +
+  facet_wrap(~Trophic.Level)
 
+ggplot(pass, aes(sample = Relative_Beak_Length)) +
+  geom_qq() +
+  geom_qq_line() +
+  facet_wrap(~Trophic.Level) 
 ```
